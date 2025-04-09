@@ -1,8 +1,7 @@
 [gd_scene load_steps=40 format=3 uid="uid://dc6dinqjys00n"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_5fgvm"]
 [ext_resource type="Texture2D" uid="uid://confngapt6t11" path="res://assets/orc_spriteSheet.png" id="1_fxd15"]
-[ext_resource type="Script" path="res://scripts/enemy.cs" id="2_cix3q"]
+[ext_resource type="Script" path="res://scripts/Enemy.cs" id="2_cix3q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_chsj8"]
 atlas = ExtResource("1_fxd15")
@@ -161,7 +160,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hx37c")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_01",
 "speed": 6.0
 }, {
@@ -184,7 +183,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_igkhk")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_02",
 "speed": 6.0
 }, {
@@ -201,7 +200,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o8ig6")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 8.0
 }, {
@@ -218,7 +217,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lvob5")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 8.0
 }, {
@@ -277,15 +276,27 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jecbn"]
 
-[node name="Enemy" type="CharacterBody2D"]
-script = ExtResource("1_5fgvm")
+[sub_resource type="CircleShape2D" id="CircleShape2D_nh3lo"]
+radius = 42.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_5lbnc")
-animation = &"attack_01"
-frame_progress = 0.275194
+[node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("2_cix3q")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_5lbnc")
+animation = &"hurt"
+
+[node name="HurtBox" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_jecbn")
+debug_color = Color(0.989297, 0, 0.292103, 0.42)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_nh3lo")
+
+[connection signal="tree_entered" from="." to="." method="OnEnemyTreeEnter"]
+[connection signal="tree_exited" from="." to="." method="OnEnemyTreeExit"]

@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgu0028aj77fd"]
+[gd_scene load_steps=3 format=3 uid="uid://cgu0028aj77fd"]
 
 [ext_resource type="Texture2D" uid="uid://bkdebw1b8f8hf" path="res://assets/bow.png" id="1_imn6f"]
+[ext_resource type="Script" path="res://scripts/Bow.cs" id="1_xqkwn"]
 
-[node name="Pivot" type="Marker2D"]
+[node name="Bow" type="Marker2D"]
 gizmo_extents = 16.0
+script = ExtResource("1_xqkwn")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(16, 0)
@@ -11,3 +13,5 @@ texture = ExtResource("1_imn6f")
 
 [node name="ShootingPoint" type="Marker2D" parent="Sprite"]
 position = Vector2(3, 0)
+
+[node name="Timer" type="Timer" parent="."]
